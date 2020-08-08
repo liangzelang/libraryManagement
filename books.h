@@ -15,17 +15,17 @@ class Books {
     uint64_t rest_nums_;
     std::string author_;
     std::string place_;
-    BooksType status_;
+    BooksStatus status_;
     Books()
       : id_(0),
         name_(""),
         category_(liter),
         total_nums_(0),
-        reset_nums_(0),
+        rest_nums_(0),
         author_(""),
         place_(""),
         status_(in) {}
     ~Books() = default;
-}
-
+    // load library infos from files or Database, now use files
+};
 #endif
