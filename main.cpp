@@ -1,17 +1,17 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "books.h"
+#include "library.h"
 
 using namespace std;
 
 int main()
 {
+    library tmp_library;
     vector<string> msg {"Hello", "C++", "World", "from", "VS Code", "and the C++ extension!"};
-
-    for (const string& word : msg)
-    {
-        cout << word << " ";
+    for (int i = 0; i < 5; i++) {
+        Books book(i, msg[i]);
+        tmp_library.addBooks(book);
     }
-    cout << endl;
+    tmp_library.printAllMsg();
 }

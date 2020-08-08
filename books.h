@@ -1,5 +1,6 @@
 #ifndef BOOKS_H_
 #define BOOKS_H_
+#include <iostream>
 #include <string>
 
 enum BooksType { liter, art, tech };
@@ -10,22 +11,11 @@ class Books {
   public:
     uint64_t id_;
     std::string name_;
-    BooksType category_;
-    uint64_t total_nums_;
-    uint64_t rest_nums_;
-    std::string author_;
-    std::string place_;
-    BooksStatus status_;
     Books()
       : id_(0),
-        name_(""),
-        category_(liter),
-        total_nums_(0),
-        rest_nums_(0),
-        author_(""),
-        place_(""),
-        status_(in) {}
+        name_("NA") {}
     ~Books() = default;
-    // load library infos from files or Database, now use files
+    Books(uint64_t id, std::string name);
+    void print();
 };
 #endif
