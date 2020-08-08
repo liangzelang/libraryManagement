@@ -14,4 +14,6 @@ int main()
         tmp_library.addBooks(book);
     }
     tmp_library.printAllMsg();
+    Students student(0, "LiMing");
+    tmp_library.borrowBooks("Hello", student);
 }

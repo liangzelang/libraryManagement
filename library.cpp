@@ -39,13 +39,12 @@ bool library::borrowBooks(std::string bookName, Students &student) {
     if (findBooks(bookName, id) == false) {  // the diff the addr pointer and reference
         std::cout << "Sorry, can't find this book:" << bookName << std::endl;
     }
-    student.borrowBooks(id);
-    /*
-    if (find(students.begin(), students.end(), student) == students.end()) {
+    student.borrowBooks(id);    
+    auto iter = find_if(students.begin(), students.end(), [student](auto n) { return (n.getID() == student.getID()); });
+    if (iter == students.end()) {    
         students.push_back(student);
     }
-    */
-    //std::cout << "[BORROW]:" << student.print() << " borrow book <<" << ">>!" << std::endl; 
+    std::cout << "[BORROW]:" << " borrow book <<" << bookName << ">>!" << std::endl; 
     return true;
 }
 
