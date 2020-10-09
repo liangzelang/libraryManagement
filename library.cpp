@@ -61,59 +61,57 @@ void library::addBooks(Books newbook) {
     books.push_back(newbook);
 }
 
-bool library::findBooks(std::string bookName, uint64_t &id) {
-    bool res = false;
-    for (auto &book : books) {
-        if (book.name_ == bookName) {
-            book.print();
-            id = book.id_;
-            res = true; 
-            return res;
-        }
-    }
-    return res;
+void library::addBooks() {
+    Books newbook;
+    std::cin.clear();
+    std::cin.sync();
+    newbook.id_ = books.size();
+    std::cout << "Please input books name:";
+    std::cin >> newbook.name_;
+    std::cout << "Please input books author:";
+    std::cin >> newbook.author_;
+    std::cout << "Please input books num:";
+    std::cin >> newbook.sum_;
+    newbook.rest_num_ = newbook.sum_;
+    books.push_back(newbook);
 }
-void library::borrowBooks(std::string bookname, std::string author) {
-    int64_t user_id = -1;
-    bool flag = false;
-    for (uint64_t i = 0; i < books.size(); i++) {
-        if (books[i].name_ == bookname && books[i].author_ == author) {
-            if (books[i].rest_num_) {
-                std::cout << "Please input your ID :";
-                std::cin >> user_id;
-                if (students[user_id].borrow_nums_ >= 10) {
-                    std::cout << "Sorry, you cannot borrow books more, you have borrowed 10 books" << std::endl;
-                    break;
-                }
-                books[i].rest_num_--; //update library this books rest nums
-                books[i].borrow_count_++; //update library this books borrow nums
-                students[user_id].borrow_nums_++; //update books nums kept by this students
-                students[user_id].book_list_.push_back(books[i].id_);
-                books[i].can_borrow_ =  bool(books[i].rest_num_);
-                students[user_id].book_list_.push_back(books[i].id_);
-                total_borrow_nums++;
-                flag = true;
-            } else {
-                std::cout << "All this books have been borrowed." << std::endl;
-            }
 
+uint64_t library::findBooks(std::string bookName, std::string author) {
+    for (auto &book : books) {
+        if (book.name_ == bookName && book.author_ == author) {
+            book.print();
+            return book.id_;
         }
     }
-    if (!flag) {
-        std::cout << "Sorry, not find this book : " << bookname;
-    }
+    return -1;
 }
-bool library::borrowBooks(std::string bookName, Students &student) {
-    uint64_t id = 0;
-    if (findBooks(bookName, id) == false) {  // the diff the addr pointer and reference
+
+bool library::borrowBooks(std::string bookName, std::string author) {
+    uint64_t id = findBooks(bookName, author);
+    if (id != -1) {
+        uint64_t tmp;
+        std::cout << "Please input your usr_id:";
+        std::cin >> tmp;
+        if (tmp < students.size()) {
+            if (students[tmp].borrow_nums_ >= 10) {
+                std::cout << "sorry , you have already borrowed 10 books" << std::endl;
+                return false;
+            }
+            students[tmp].book_list_.push_back(id);
+            students[tmp].borrow_nums_++;
+            students[tmp].total_nums_++;
+            books[id].rest_num_--;
+            books[id].can_borrow_ = (books[id].rest_num_ == 0) ? false : true;
+            books[id].borrow_count_++; //redundent
+            saveBooksInfo();
+            saveStudentsInfo();
+        } else {
+            std::cout << "wrong usr_id" << std::endl;
+            return false;
+        }
+    } else {
         std::cout << "Sorry, can't find this book:" << bookName << std::endl;
     }
-    student.borrowBooks(id);    
-    auto iter = find_if(students.begin(), students.end(), [&](auto n) { return (n.getID() == student.getID()); });
-    if (iter == students.end()) {    
-        students.push_back(student);
-    }
-    std::cout << "[BORROW]:" << " borrow book <<" << bookName << ">>!" << std::endl;
     return true;
 }
 
@@ -181,7 +179,6 @@ void library::printAllMsg() {
     }
 }
 
-
 bool library::findStudents(uint64_t user_id) {
     uint32_t size = students.size();
     for (uint32_t i = 0; i < size; i++) {
@@ -190,4 +187,20 @@ bool library::findStudents(uint64_t user_id) {
         }
     }
     return false;
+}
+
+void library::deleteBooks(std::string bookname, std::string author) {
+    for (auto &book : books) {
+        if (book.name_ == bookname && book.author_ == author) {
+            books.erase(books.begin() + book.id_);
+        }
+    }
+    return;
+}
+
+void library::deleteBooks(uint64_t id) {
+    if (id < books.size() && id >= 0) {
+        books.erase(books.begin() + id);
+    }
+    return;
 }

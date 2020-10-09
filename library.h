@@ -20,14 +20,13 @@ public:
     library();
     ~library();
     void addBooks(Books newBook); //上架图书
+    void addBooks();
     void deleteBooks(std::string bookname, std::string author);  //下架图书
-    //void deleteBooks(uint64_t id); //下架图书
-    void borrowBooks(std::string bookname, std::string author); //借阅图书
+    void deleteBooks(uint64_t id); //下架图书
+    bool borrowBooks(std::string bookname, std::string author); //借阅图书
     void returnBooks(std::string bookname, std::string author); //归还图书
-    bool findBooks(std::string bookName, uint64_t &id);
-    bool findBooks(uint64_t book_id);
+    uint64_t findBooks(std::string bookName, std::string author);
     bool findStudents(uint64_t user_id);
-    bool borrowBooks(std::string bookName, Students &student); //借阅图书
     void printAllMsg();  //输出系统所有图书
     void saveBooksInfo();  //保存图书信息
     void saveStudentsInfo();  //保存学生信息
