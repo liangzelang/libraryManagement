@@ -11,11 +11,24 @@ class Books {
   public:
     uint64_t id_;
     std::string name_;
-    Books()
-      : id_(0),
-        name_("NA") {}
+    uint64_t borrow_count_;
+    BooksType kind_;
+    uint64_t price;
+    uint64_t sum_;
+    uint64_t rest_num_;
+    std::string author_;
+    uint64_t appointment_;
+    bool can_borrow_;
+    std::string borrow_date_;
+    std::string return_date_;
+    std::string place_;
+
+    Books() : id_(0), name_("NA") {}
     ~Books() = default;
     Books(uint64_t id, std::string name);
+    // check whether can borrow or not by id or name
+    bool canBorrow(uint64_t id);
+    bool canBorrow(std::string name);
     void print();
 };
 #endif

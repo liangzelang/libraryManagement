@@ -15,5 +15,5 @@ Books::Books(uint64_t id, std::string name) {
     name_ = name;
 }
 void Books::print() {
-    std::cout << "id : " << id_ << "name : " << name_ << std::endl;
+    std::cout << "id : " << id_ << "  name : " << name_ << std::endl;
 }
