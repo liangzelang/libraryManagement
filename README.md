@@ -11,6 +11,7 @@ this project is main for building a simple libraryManagement with C++, if you ar
 2. 读者注册
 3. 借书
 4. 还书
+5. 管理员模式 和 读者模式
 
 ## TODO
 ## 计划
@@ -22,3 +23,4 @@ this project is main for building a simple libraryManagement with C++, if you ar
 ## Contribution
 ## 贡献
 I'll appreciate that Any PR and Issues, Together, we create interesting and useful projects for C++ starter.
+非常欢迎大家提PR和Issue，期待与大家共同完成这个专为C++初学者设计的小项目
