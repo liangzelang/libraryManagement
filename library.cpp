@@ -189,18 +189,59 @@ bool library::findStudents(uint64_t user_id) {
     return false;
 }
 
-void library::deleteBooks(std::string bookname, std::string author) {
-    for (auto &book : books) {
-        if (book.name_ == bookname && book.author_ == author) {
-            books.erase(books.begin() + book.id_);
+void library::deleteBooks() {
+    std::cin.sync();
+    std::cin.clear();
+    uint64_t temp = 0;
+    std::cout << "Delete Books by id(0) or name(1): " << std::endl;
+    std::cin >> temp;
+    switch (temp) {
+        case 0:
+        {
+            uint64_t books_id;
+            std::cout << "Please input book id: " << std::endl;
+            std::cin >> books_id;
+            deleteBooks(books_id);
+            break;
         }
+        case 1:
+        {
+            std::string books_name;
+            std::string books_author;
+            std::cout << "Please input book name: " << std::endl;
+            std::cin >> books_name;
+            std::cout << "Please input book author: " << std::endl;
+            std::cin >> books_author;
+            deleteBooks(books_name, books_author);
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+void library::deleteBooks(std::string bookname, std::string author) {
+    auto it = books.begin();
+    while (it != books.end()) {
+        if ((*it).name_ == bookname && (*it).author_ == author) {
+            books.erase(it);
+            saveBooksInfo();
+            continue;
+        }
+        it++;
     }
     return;
 }
 
 void library::deleteBooks(uint64_t id) {
-    if (id < books.size() && id >= 0) {
-        books.erase(books.begin() + id);
+    auto it = books.begin();
+    while(it != books.end()) {
+        if ((*it).id_ == id) {
+            books.erase(it); //erase后it迭代器会自动后移这个时候不再需要自增了
+            saveBooksInfo();
+            continue;
+        }
+        it++;
     }
     return;
 }

@@ -21,6 +21,7 @@ public:
     ~library();
     void addBooks(Books newBook); //上架图书
     void addBooks();
+    void deleteBooks();
     void deleteBooks(std::string bookname, std::string author);  //下架图书
     void deleteBooks(uint64_t id); //下架图书
     bool borrowBooks(std::string bookname, std::string author); //借阅图书

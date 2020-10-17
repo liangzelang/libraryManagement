@@ -98,7 +98,7 @@ void handleAdam(library &library)
                     library.addBooks();
                     break;
                 case 2:
-                    library.deleteBooks(0);
+                    library.deleteBooks();
                     break;
                 case 3:
                     library.printAllMsg();
