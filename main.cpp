@@ -57,6 +57,12 @@ void handleReader(library &library)
             std::cout << "input author :";
             std::cin >> author;
             library.borrowBooks(bookname, author);
+        case 3:
+            std::cout << "input books name :";
+            std::cin >> bookname;
+            std::cout << "input author :";
+            std::cin >> author;
+            library.returnBooks(bookname, author);
         default:
             break;
         }
@@ -104,12 +110,17 @@ void handleAdam(library &library)
                     library.printAllMsg();
                     break;
                 case 4:
-                    std::cout << "not supported now" << std::endl;
+                    library.bookStatics(); //书籍借阅排行榜
                     break;
                 case 5:
-                    std::cout << "not supported now" << std::endl;
+                    library.readerStatics(); //读者阅读排行榜
+                    break;
+                case 6:
+                    std::cout << "Bye" << std::endl;
                     break;
                 default:
+                    std::cout << "invalid input, exit now" << std::endl;
+                    tmp = 6;
                     break;
             }
         } while(tmp != 6);

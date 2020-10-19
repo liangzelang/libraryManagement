@@ -140,6 +140,21 @@ void library::returnBooks(std::string bookname, std::string author) {
     void saveStudentsInfo();  //保存学生信息
 }
 
+bool library::compareBook(const Books &A, const Books &B) {
+    return A.borrow_count_ > B.borrow_count_;
+}
+
+bool library::compareReader(const Students &A, const Students &B) {
+    return A.borrow_nums_ > B.borrow_nums_;
+}
+
+void library::bookStatics() {
+    sort(books.begin(), books.end(), compareBook);
+}
+void library::readerStatics() {
+    sort(students.begin(), students.end(), compareReader);
+}
+
 void library::saveBooksInfo() {
   std::string file_name = "./books.txt";
   std::ofstream ofs(file_name);
