@@ -6,28 +6,31 @@ library::library() {
   uint64_t allBooks;
   uint64_t allStudents;
   if (!ifs.is_open()) {
-      std::cout << "can't open this file " << file_name << std::endl;
-  }
-  ifs >> allBooks; //第一行存储图书管理系统中一共的书籍数量
-  for (uint64_t i = 0; i < allBooks; i++) {
-      Books temp;
-      ifs >> temp.id_ >> temp.name_;
-      books.push_back(temp);
-  }
-  ifs.close();
+    std::cout << "can't open this file " << file_name << std::endl;
+  } else {
+    ifs >> allBooks; //第一行存储图书管理系统中一共的书籍数量
+    for (uint64_t i = 0; i < allBooks; i++) {
+        Books temp;
+        ifs >> temp.id_ >> temp.name_;
+        books.push_back(temp);
+    }
+    ifs.close();
+  };
+
 
   file_name = "./students.txt";
   ifs.open(file_name);
   if (!ifs.is_open()) {
       std::cout << "can't open this file" << file_name << std::endl;
+  } else {
+      ifs >> allStudents;
+      for (uint64_t i = 0; i < allStudents; i++) {
+          Students temp;
+          ifs >> temp.id_ >> temp.name_ >> temp.borrow_nums_ >> temp.total_nums_;
+          students.push_back(temp);
+      }
+      ifs.close();
   }
-  ifs >> allStudents;
-  for (uint64_t i = 0; i < allStudents; i++) {
-      Students temp;
-      ifs >> temp.id_ >> temp.name_ >> temp.borrow_nums_ >> temp.total_nums_;
-      students.push_back(temp);
-  }
-  ifs.close();
 }
 
 library::~library() {
@@ -35,7 +38,8 @@ library::~library() {
   std::ofstream ofs(file_name);
   std::cout << "Deinit class library" << std::endl;
   if (!ofs.is_open()) {
-    std::cout << "can't open this file" << file_name << std::endl;
+      std::cout << "can't open this file" << file_name << std::endl;
+      return;
   }
   ofs << books.size() << "\n";
   for (auto &book : books) {
@@ -47,6 +51,7 @@ library::~library() {
   ofs.open(file_name);
   if (!ofs.is_open()) {
       std::cout << "can't open this file " << file_name << std::endl;
+      return;
   }
   ofs << students.size() << "\n";
   for (auto &temp : students) {
@@ -149,10 +154,20 @@ bool library::compareReader(const Students &A, const Students &B) {
 }
 
 void library::bookStatics() {
-    sort(books.begin(), books.end(), compareBook);
+    std::sort(books.begin(), books.end(), compareBook);
+    std::cout << "Books Borrow Ranks" << std::endl;
+    for (auto book : books) {
+        std::cout << "id: " << book.id_ << ", bookname: " << book.name_ << ", borrow_count: " << book.borrow_count_
+                  << std::endl;
+    }
 }
 void library::readerStatics() {
     sort(students.begin(), students.end(), compareReader);
+    std::cout << "Readers Ranks" << std::endl;
+    for (auto student : students) {
+        std::cout << "id: " << student.id_ << ", name: " << student.name_ << ", borrow_count_: " << student.borrow_nums_
+                  << std::endl;
+    }
 }
 
 void library::saveBooksInfo() {

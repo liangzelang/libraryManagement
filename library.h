@@ -28,8 +28,8 @@ public:
     void returnBooks(std::string bookname, std::string author); //归还图书
     uint64_t findBooks(std::string bookName, std::string author);
     bool findStudents(uint64_t user_id);
-    bool compareBook(const Books &A, const Books &B);
-    bool compareReader(const Students &a, const Students &b);
+    static bool compareBook(const Books &A, const Books &B);
+    static bool compareReader(const Students &a, const Students &b);
     void bookStatics(); //书籍阅读排行榜
     void readerStatics(); //读者阅读排行榜
     void printAllMsg();  //输出系统所有图书
